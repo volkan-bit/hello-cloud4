@@ -20,7 +20,7 @@ def ziyaretciler():
     cur.execute("CREATE TABLE IF NOT EXISTS ziyaretciler (id SERIAL PRIMARY KEY, isim TEXT, mesaj TEXT)")
 
     if request.method == "POST":
-        data = request.get_json(force=True)
+        data = request.json
         isim = data.get("isim")
         mesaj = data.get("mesaj")
         if isim and mesaj:
