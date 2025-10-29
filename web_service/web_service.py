@@ -39,10 +39,10 @@ HTML = """
 def index():
     if request.method == "POST":
         isim = request.form.get("isim")
-        requests.post(API_URL, json={"isim": isim})
+        requests.post(API_URL + "/ziyaretciler", json={"isim": isim})
         return redirect("/")
 
-    resp = requests.get(API_URL)
+    resp = requests.get(API_URL + "/ziyaretciler")
     isimler = resp.json() if resp.status_code == 200 else []
     return render_template_string(HTML, isimler=isimler)
 
