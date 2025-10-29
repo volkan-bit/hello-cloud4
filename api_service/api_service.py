@@ -17,16 +17,17 @@ def connect_db():
 def ziyaretciler():
     conn = connect_db()
     cur = conn.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS ziyaretciler (id SERIAL PRIMARY KEY, isim TEXT)")
+    cur.execute("CREATE TABLE IF NOT EXISTS ziyaretciler (id SERIAL PRIMARY KEY, isim TEXT, mesaj TEXT)")
 
     if request.method == "POST":
         isim = request.json.get("isim")
-        if isim:
-            cur.execute("INSERT INTO ziyaretciler (isim) VALUES (%s)", (isim,))
+        mesaj = request.json.get("mesaj")
+        if isim and mesaj:
+            cur.execute("INSERT INTO ziyaretciler (isim, mesaj) VALUES (%s, %s)", (isim, mesaj))
             conn.commit()
 
-    cur.execute("SELECT isim FROM ziyaretciler ORDER BY id DESC LIMIT 10")
-    isimler = [row[0] for row in cur.fetchall()]
+    cur.execute("SELECT isim, mesaj FROM ziyaretciler ORDER BY id DESC LIMIT 10")
+    isimler = [{"isim": row[0], "mesaj": row[1]} for row in cur.fetchall()]
 
     cur.close()
     conn.close()
