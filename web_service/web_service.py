@@ -9,7 +9,7 @@ HTML = """
 <!doctype html>
 <html>
 <head>
-    <title>☁️ Mikro Hizmetli Selam!</title>
+    <title>Mikro Hizmetli Selam!</title>
     <style>
         body { font-family: Arial; text-align: center; padding: 50px; background: #eef2f3; }
         h1 { color: #333; }
@@ -19,16 +19,17 @@ HTML = """
     </style>
 </head>
 <body>
-    <h1>☁️ Mikro Hizmetli Selam!</h1>
-    <p>Adını yaz, selamını bırak 👇</p>
+    <h1>Mikro Hizmetli Selam!</h1>
+    <p>Adını ve mesajını yaz</p>
     <form method="POST">
         <input type="text" name="isim" placeholder="Adını yaz" required>
+        <input type="text" name="mesaj" placeholder="Mesajını yaz" required>
         <button type="submit">Gönder</button>
     </form>
     <h3>Ziyaretçiler:</h3>
     <ul>
-        {% for ad in isimler %}
-            <li>{{ ad }}</li>
+        {% for z in isimler %}
+            <li><b>{{ z["isim"] }}</b>: {{ z["mesaj"] }}</li>
         {% endfor %}
     </ul>
 </body>
@@ -39,7 +40,8 @@ HTML = """
 def index():
     if request.method == "POST":
         isim = request.form.get("isim")
-        requests.post(API_URL + "/ziyaretciler", json={"isim": isim})
+        mesaj = request.form.get("mesaj")
+        requests.post(API_URL + "/ziyaretciler", json={"isim": isim, "mesaj": mesaj})
         return redirect("/")
 
     resp = requests.get(API_URL + "/ziyaretciler")
