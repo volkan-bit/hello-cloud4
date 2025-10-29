@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-API_URL = "http://localhost:5001/ziyaretciler"
+API_URL = "https://hello-cloud4.onrender.com"
 
 HTML = """
 <!doctype html>
