@@ -41,8 +41,7 @@ def index():
     if request.method == "POST":
         isim = request.form.get("isim")
         mesaj = request.form.get("mesaj")
-        if isim and mesaj:
-            requests.post(API_URL, json={"isim": isim, "mesaj": mesaj})
+        requests.post(API_URL, json={"isim": isim, "mesaj": mesaj})
         return redirect("/")
 
     resp = requests.get(API_URL)
