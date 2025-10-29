@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-API_URL = "https://hello-cloud4.onrender.com"
+API_URL = "https://hello-cloud4.onrender.com/ziyaretciler"
 
 HTML = """
 <!doctype html>
@@ -41,10 +41,11 @@ def index():
     if request.method == "POST":
         isim = request.form.get("isim")
         mesaj = request.form.get("mesaj")
-        requests.post(API_URL + "/ziyaretciler", json={"isim": isim, "mesaj": mesaj})
+        if isim and mesaj:
+            requests.post(API_URL, json={"isim": isim, "mesaj": mesaj})
         return redirect("/")
 
-    resp = requests.get(API_URL + "/ziyaretciler")
+    resp = requests.get(API_URL)
     isimler = resp.json() if resp.status_code == 200 else []
     return render_template_string(HTML, isimler=isimler)
 
